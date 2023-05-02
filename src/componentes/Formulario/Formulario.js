@@ -27,7 +27,7 @@ const Formulario = () => {
 }
 */
 
-const Formulario = () => {
+const Formulario = (props) => {
 
     const [nombre, setNombre] = useState("");
     const [cargo, setCargo] = useState("");
@@ -45,7 +45,7 @@ const Formulario = () => {
             foto: foto,
             equipo // Cuando la llave y el valor tienen el mismo nombre se puede indicar de esta forma.
         }
-        console.log(datosXEnviar);
+        props.registrarColaborador(datosXEnviar);
     }
 
     return <section className="formulario">
@@ -75,6 +75,7 @@ const Formulario = () => {
             <ListaOpciones
                 valor = {equipo}
                 setValor = {setEquipo}
+                equipos = {props.equipos}
             />
             <Boton texto = "Crear Colaborador"/>
         </form>

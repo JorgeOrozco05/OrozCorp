@@ -9,9 +9,16 @@ import Equipo from "./componentes/Equipo/Equipo";
 function App() {
 
   const [mostrarForm, actForm] = useState(false);
+  const [colaboradores, setColaboradores] = useState([]);
 
   const cambiarMostrar = () => {
     actForm(!mostrarForm);
+  }
+
+  const registrarColaborador = (colaborador) => {
+    console.log("nuevo Colaborador", colaborador)
+    // Spread Operator => crea una copia de los valores y luego agrega los nuevos valores
+    setColaboradores([...colaboradores, colaborador]);
   }
 
   const equipos = [
@@ -56,7 +63,12 @@ function App() {
       {/* {Header()} */}
       {/* <Header></Header> */}
       <Header />
-      {mostrarForm === true ? <Formulario/> : <div></div>}
+      {mostrarForm === true ? <Formulario 
+        equipos={equipos.map((equipo)=>equipo.titulo)}
+        registrarColaborador = {registrarColaborador} 
+        />
+        : <div></div>
+      }
       <MiOrg  cambiarMostrar={cambiarMostrar}/>
       {
         equipos.map( (equipo) => {
