@@ -1,31 +1,10 @@
 
 import {useState} from "react";
 import "./Formulario.css";
-import CampoTexto from "../CampoTexto/CampoTexto";
+import Campo from "../Campo/Campo";
 import ListaOpciones from "../ListaOpciones/ListaOpciones";
 import Boton from "../Boton/Boton";
 
-
-/*
-const Formulario = () => {
-    return <section className="formulario">
-        <form>
-            <h2>Crea un colaborador</h2>
-            <label>Nombre</label><br/>
-            <input className="input" placeholder="Ingresar nombre"></input><br/>
-            <label>Puesto</label><br/>
-            <input className="input" placeholder="Ingresar cargo"></input><br/>
-            <label>Foto</label><br/>
-            <input className="input" placeholder="Ingresar enlace de foto"></input><br/>
-            <label>Equipo</label><br/>
-            <input className="input" placeholder="Seleccionar equipo"></input>
-            <br/>
-            <button>Crear</button>
-            
-        </form>
-    </section>
-}
-*/
 
 const Formulario = (props) => {
 
@@ -33,6 +12,8 @@ const Formulario = (props) => {
     const [cargo, setCargo] = useState("");
     const [foto, setFoto] = useState("");
     const [equipo, setEquipo] = useState("");
+    const [titulo, setTitulo] = useState("");
+    const [color, setColor] = useState("");
 
     
 
@@ -48,24 +29,35 @@ const Formulario = (props) => {
         props.registrarColaborador(datosXEnviar);
     }
 
+    const enviar2 = (evento)=>{
+        evento.preventDefault();
+        console.log("Datos enviados");
+        let datosXEnviar2 = {
+            titulo, // Cuando la llave y el valor tienen el mismo nombre se puede indicar de esta forma.
+            colorPrimario: color 
+        }
+        props.registrarEquipo(datosXEnviar2);
+        // props.registrarEquipo({titulo, colorPrimario: color}); si no funciona el de arriba usa este otra forma
+    }
+
     return <section className="formulario">
         <form onSubmit = {enviar}>
-            <h2>Crea un colaborador y añadelo a un equipo</h2>
-            <CampoTexto 
+            <h2>Crea un colaborador</h2>
+            <Campo 
                 titulo = "Nombre" 
                 placeholder = "Ingresar nombre" 
                 required = {true}
                 valor = {nombre}
                 setValor = {setNombre}
             />
-            <CampoTexto 
+            <Campo 
                 titulo = "Cargo" 
                 placeholder = "Ingresar cargo" 
                 required
                 valor = {cargo}
                 setValor = {setCargo}
             />
-            <CampoTexto 
+            <Campo 
                 titulo = "Foto" 
                 placeholder = "Ingresar ruta de foto" 
                 required
@@ -78,6 +70,25 @@ const Formulario = (props) => {
                 equipos = {props.equipos}
             />
             <Boton texto = "Crear Colaborador"/>
+        </form>
+        <form onSubmit = {enviar2}>
+            <h2>Crea un equipo nuevo</h2>
+            <Campo 
+                titulo = "Titulo" 
+                placeholder = "Ingresar titulo del equipo" 
+                required = {true}
+                valor = {titulo}
+                setValor = {setTitulo}
+            />
+            <Campo 
+                titulo = "Color" 
+                placeholder = "Ingresar un color en formato Hex" 
+                required
+                valor = {color}
+                setValor = {setColor}
+                type = "color"
+            />
+            <Boton texto = "Crear Equipo"/>
         </form>
     </section>
 }
